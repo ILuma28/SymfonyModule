@@ -4,16 +4,25 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <!-- All style files -->
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            <!-- Font Awesome Icons -->
+            <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+            <!-- CSS Files -->
+            <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
+            <link rel="stylesheet" href="{{asset('css/style.css')}}">
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            <div id="app"></div>
+            <!-- All script files -->
+            {% block javascripts %}
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/Javascript" src="{{asset('js/index.js')}}"></script>
+                {{ encore_entry_script_tags('app') }}
+            {% endblock %}
+        
+        {% endblock %}
     </body>
 </html>
