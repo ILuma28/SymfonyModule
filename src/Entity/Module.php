@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+// On importe les dépendances nécessaires
 use App\Repository\ModuleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -12,43 +13,53 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\HistoriqueModule;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
+// Les variables possédant le groupe module_read seront retournées en cas de requête GET
 #[ApiResource(normalizationContext:['skip-null-values'=>'false', 'groups' => "module_read"])]
 class Module
 {
+    // ID
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['module_read'])]
+    #[Groups(['module_read', 'historique_read'])]
     private ?int $id = null;
 
+    // Nom
     #[ORM\Column(length: 255)]
     #[Groups(['module_read'])]
     private ?string $Nom = null;
 
+    // Type
     #[ORM\Column(length: 255)]
     #[Groups(['module_read'])]
     private ?string $Type = null;
 
+    // Valeur actuelle
     #[ORM\Column(nullable: true)]
     #[Groups(['module_read'])]
     private ?int $ValeurActuelle = null;
 
+    // Durée de fonctionnement
     #[ORM\Column(length: 255)]
     #[Groups(['module_read'])]
     private ?int $DureeFonctionnement = 0;
 
+    // Nombre de données envoyées
     #[ORM\Column]
     #[Groups(['module_read'])]
     private ?int $NombreDonneesEnvoyees = 0;
 
+    // Etat de marche
     #[ORM\Column]
     #[Groups(['module_read'])]
     private ?bool $EtatMarche = true;
 
-    #[ORM\OneToMany(targetEntity:HistoriqueModule::class, mappedBy:"Module")]
+    // Historique
+    #[ORM\OneToMany(targetEntity:HistoriqueModule::class, mappedBy:"Module", orphanRemoval:true)] // Relation à l'entité Historique
     #[Groups(['module_read'])]
     private $Historique;
 
+    // Getter et Setter pour chaque champ
     public function __construct()
     {
         $this->Historique = new ArrayCollection();
@@ -143,7 +154,7 @@ class Module
     {
         if (!$this->Historique->contains($Historique)) {
             $this->Historique[] = $Historique;
-            $Historique->setChambre($this);
+            $Historique->setModule($this);
         }
 
         return $this;
@@ -152,8 +163,8 @@ class Module
     public function removeHistorique(HistoriqueModule $Historique): self
     {
         if ($this->Historique->removeElement($Historique)){
-            if ($Historique->getChambre() === $this) {
-                $Historique->setChambre(null);
+            if ($Historique->getModule() === $this) {
+                $Historique->setModule(null);
             }
         }
         
