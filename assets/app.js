@@ -1,12 +1,3 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
-
 // On commence par importer toutes les dépendances nécessaires (React, libraire de notifications, pages, composants)
 
 import React, { useState } from "react";
@@ -59,13 +50,12 @@ const App = () => {
             </div >
           </div >
         </HashRouter >
-        <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
   
       </>
   
     );
   };
   
+  {/* Ici, on définit l'endroit où notre routing sera appliqué pour afficher les différentes pages. Ce sera donc la div contenant l'ID app qui est présente dans le fichier base.html.twig */}
   const rootElement = document.querySelector("#app");
-  
   ReactDOM.render(<App />, rootElement);

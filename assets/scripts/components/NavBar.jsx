@@ -3,42 +3,23 @@
 
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../images/module_logo.png";
+import logo from "../../images/moduleLogo.png";
 
 const NavBar = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
-  const [largeur, setLargeur] = useState(window.innerWidth);
-
-  const toggleNavSmallScreen = () => {
-    setToggleMenu(!toggleMenu);
-  };
-
-  useEffect(() => {
-    const changeWidth = () => {
-      setLargeur(window.innerWidth);
-
-      if (window.innerWidth > 500) {
-        setToggleMenu(false);
-      }
-    };
-
-    window.addEventListener("resize", changeWidth);
-
-    return () => {
-      window.removeEventListener("resize", changeWidth);
-    };
-  }, []);
 
   return (
       <div id="body-pd">
+          {/* Ajout de la barre supérieure servant d'en-tête pour le logo, le bouton pour agrandir la barre latérale et d'éventuelles informations supplémentaires */} 
           <header className="header" id="header">
-              <div className="header_toggle"> <i className='bx bx-menu' id="header-toggle"></i> </div>
+              <div className="header_toggle"> <i className='bx bx-menu' id="header-toggle"/> </div>
               <div className="header_img"> <img src={logo} className='header_img' alt="logo"></img> </div>
           </header>
+
+          {/* Ajout de la barre latérale servant d'accès aux différentes pages */} 
           <div className="l-navbar" id="nav-bar">
               <nav className="nav">
                   <div> 
-
+                    {/* Redirection vers accueil */} 
                     <NavLink 
                         className="nav_logo bx bx-layer nav_logo-icon nav_logo-name"
                         to="/#">
@@ -46,7 +27,9 @@ const NavBar = () => {
                     </NavLink>
 
                       <div className="nav_list"> 
+                          {/* Redirection vers la page des modules */} 
                           <a href="/#/modules" className="nav_link active"> <i className='bx bx-grid-alt nav_icon'></i> <span className="nav_name">Modules</span> </a> 
+                          {/* Redirection vers la page des informations */} 
                           <a href="/#/info" className="nav_link"> <i className='bx bx-user nav_icon'></i> <span className="nav_name">En savoir plus</span> </a> 
                       </div>
                     
@@ -60,4 +43,5 @@ const NavBar = () => {
   );
 };  
 
+// On exporte notre barre de navigation
 export default NavBar;
